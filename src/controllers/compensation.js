@@ -53,11 +53,12 @@ const getTotalCompRangeByGroup = (key, data) => {
     }
   });
 
-  // needs an additiona step to filter data by the unique values collected above
   return Object.keys(uniqueValues).map((value) => {
+    // added this line, to fix the remaining issue, after the interview :)
+    const filteredData = data.filter((row) => row[value]);
     return {
       [key]: value,
-      range: getTotalCompRanges(data),
+      range: getTotalCompRanges(filteredData),
     };
   });
 };
@@ -85,7 +86,7 @@ const list = async (req, res) => {
       },
       {
         name: 'Gamine',
-        ranges: getTotalCompRangesByGroup(groupBy, gamineData),
+        ranges: getTotalCompRangeByGroup(groupBy, gamineData),
       },
     ],
   });
