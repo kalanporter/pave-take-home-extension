@@ -1,6 +1,6 @@
-const fs = require('fs');
-const path = require('path');
-const csvparser = require('csv-parser');
+import fs from 'fs';
+import path from 'path';
+import csvparser from 'csv-parser';
 
 const hookfishDataPromise = new Promise((resolve, reject) => {
   const results = [];
@@ -31,7 +31,6 @@ const getPercentile = (arr, percentile) => {
 };
 
 const getTotalCompRanges = (data) => {
-  debugger;
   const totalComps = data.map(
     ({ salary, bonus }) => parseInt(salary) + parseInt(bonus)
   );
@@ -55,7 +54,7 @@ const getTotalCompRangeByGroup = (key, data) => {
 
   return Object.keys(uniqueValues).map((value) => {
     // added this line, to fix the remaining issue, after the interview :)
-    const filteredData = data.filter((row) => row[value]);
+    const filteredData = data.filter((row) => row[key] === value);
     return {
       [key]: value,
       range: getTotalCompRanges(filteredData),
